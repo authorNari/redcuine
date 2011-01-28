@@ -21,14 +21,12 @@ module Redcuine
       opt.on('-d', '--delete', 'DELETE by REST API') do |val|
         CONFIG["rest_type"] = :delete
       end
-      opt.on('--dry-run', 'Print plane text for REST. For debug') do |val|
-        CONFIG["dry_run"] = val
-      end
     end
 
     @issue_optionparser = OptionParser.new do |opt|
       opt.program_name = 'redissue'
 
+      default_opts(opt)
       %w(id subject describe tracker-id status-id category-id assigned-to
          priority fixed-version start-date due-date estimate-date
          done-ratio site).each do |k|
@@ -39,7 +37,6 @@ module Redcuine
         SRC
         eval(src)
       end
-      default_opts(opt)
     end
   end
 end

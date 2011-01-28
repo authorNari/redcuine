@@ -1,0 +1,22 @@
+= redcuine
+
+Welcome to the CUI world from Redmine.
+redcuine is CUI toolkit for Redmine.
+
+== Usage
+
+redcuine use {REST API in Redmine}[http://www.redmine.org/projects/redmine/wiki/Rest_api].
+
+=== Treat issue
+
+Use redissue.
+
+  $ redissue -g                        # GET
+  $ redissue -p --subject test         # POST
+  $ redissue -u --id 1 --subject test  # PUT
+  $ redissue -d --id 1                 # DELETE
+
+== Author
+
+Copyright (c) 2011 {Narihiro Nakamura}[http://www.narihir.info],
+released under the MIT license.
