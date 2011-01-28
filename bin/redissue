@@ -10,5 +10,6 @@ self_file =
   end
 $:.unshift(File.dirname(self_file) + "/../lib")
 
-require 'redticket'
-Redticket::MailSender.send
+require 'redcuine'
+Redcuine::OptParser.issue_parse!(ARGV)
+Redcuine::Issue.run
