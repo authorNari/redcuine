@@ -7,7 +7,7 @@ redcuine is CUI toolkit for Redmine.
 
 redcuine use {REST API in Redmine}[http://www.redmine.org/projects/redmine/wiki/Rest_api].
 
-=== Treat issue
+=== Treat issues
 
 Use redissue.
 
@@ -15,6 +15,10 @@ Use redissue.
   $ redissue -p --subject test         # POST
   $ redissue -u --id 1 --subject test  # PUT
   $ redissue -d --id 1                 # DELETE
+
+=== Treat projects
+
+TODO:
 
 == Author
 
