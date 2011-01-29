@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{redcuine}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Narihiro Nakmaura"]
-  s.date = %q{2011-01-29}
+  s.date = %q{2011-01-30}
   s.default_executable = %q{redissue}
   s.description = %q{CUI toolkit for Redmine}
   s.email = %q{authornari@gmail.com}
@@ -32,12 +32,22 @@ Gem::Specification.new do |s|
     "lib/redcuine/issue.rb",
     "lib/redcuine/optparser.rb",
     "lib/redcuine/resource.rb",
-    "redcuine.gemspec"
+    "redcuine.gemspec",
+    "test/config_setup_test.rb",
+    "test/issue_test.rb",
+    "test/optparser_test.rb",
+    "test/test_helper.rb"
   ]
   s.homepage = %q{https://github.com/authorNari/redcuine}
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{CUI toolkit for Redmine}
+  s.test_files = [
+    "test/config_setup_test.rb",
+    "test/issue_test.rb",
+    "test/optparser_test.rb",
+    "test/test_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
