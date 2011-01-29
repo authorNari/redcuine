@@ -6,12 +6,14 @@ require 'yaml'
 require 'time'
 require "ostruct"
 require "optparse"
-require 'redmine_client'
+require 'active_resource'
 
 require "redcuine/config_setup"
 require "redcuine/optparser"
 require "redcuine/base"
 require "redcuine/issue"
+require "redcuine/resource"
+require "redcuine/active_resource_ext"
 
 Version = File.read(File.join(File.dirname(__FILE__), '../VERSION')).strip
 module Redcuine

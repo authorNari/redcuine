@@ -17,14 +17,7 @@ module Redcuine
     end
 
     def get
-      if CONFIG["id"]
-        puts RedmineClient::Issue.find(CONFIG["id"], :params => @default_param).to_yaml
-      else
-        opts = rest_options([:project_id, :tracker_id, :assigned_to, :status_id],
-                            @default_param)
-        puts RedmineClient::Issue.find(:all, :params => opts).to_yaml
-      end
-      return true
+      CONFIG["id"] ? show(CONFIG["id"]) : index
     end
 
     def post
@@ -32,7 +25,7 @@ module Redcuine
               :category_id, :assigned_to, :priority, :fixed_version,
               :start_date, :due_date, :estimate_date, :done_ratio]
       opts = rest_options(keys, @default_param)
-      issue = RedmineClient::Issue.new(opts)
+      issue = Resource::Issue.new(opts)
       res = issue.save
       puts res ? "Issue created!" : "Issue fail to create."
       return res
@@ -43,7 +36,7 @@ module Redcuine
               :category_id, :assigned_to, :priority, :fixed_version,
               :start_date, :due_date, :estimate_date, :done_ratio]
       opts = rest_options(keys, @default_param)
-      issue = RedmineClient::Issue.find(CONFIG["id"])
+      issue = Resource::Issue.find(CONFIG["id"])
       issue.load(opts)
       res = issue.save
       puts res ? "Issue updated!" : "Issue fail to update."
@@ -51,7 +44,7 @@ module Redcuine
     end
 
     def delete
-      issue = RedmineClient::Issue.find(CONFIG["id"])
+      issue = Resource::Issue.find(CONFIG["id"])
       res = issue.destroy
       puts res ? "Issue destroyed!" : "Issue fail to destroy."
       return res
@@ -74,6 +67,37 @@ module Redcuine
         return false
       end
       return true
+    end
+
+    def show(id)
+      issue = Resource::Issue.find(CONFIG["id"], :params => @default_param)
+      print_get_format(issue)
+    end
+
+    def index
+      opts = rest_options([:project_id, :tracker_id, :assigned_to, :status_id],
+                          @default_param)
+      res = Resource::Issue.find(:all, :params => opts)
+      res.each {|issue| print_get_format(issue)}
+    end
+
+    def print_get_format(issue)
+      puts "- id: #{issue.id}"
+      %w(project status priority author assigned_to fixed_version).each do |k|
+        if issue.respond_to?(k)
+          puts "  #{k}: #{issue.send(k).name}, id:#{issue.send(k).id}"
+        end
+      end
+      %w(subject description start_date due_date
+         done_ratio estimated_hours created_on updated_on).each do |k|
+        puts "  #{k}: #{issue.send(k)}" if issue.respond_to?(k)
+      end
+      if issue.respond_to?(:custom_fields)
+        puts "  custom_fields: "
+        issue.custom_fields.each do |cf|
+          puts "   - #{cf.name}, id:#{cf.id}, value:#{cf.value}"
+        end
+      end
     end
   end
 end

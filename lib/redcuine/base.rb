@@ -2,7 +2,7 @@ module Redcuine
   class Base
     def self.run
       if res = check_args
-        RedmineClient::Base.configure do
+        Resource::Base.setup do
           self.site = CONFIG["site"]
           if CONFIG["user"] && CONFIG["password"]
             self.user = CONFIG["user"]
