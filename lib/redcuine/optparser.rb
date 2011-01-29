@@ -31,7 +31,7 @@ module Redcuine
       opt.program_name = 'redissue'
 
       default_opts(opt)
-      %w(id subject describe tracker-id status-id category-id assigned-to
+      %w(id subject description tracker-id status-id category-id assigned-to
          priority fixed-version start-date due-date estimate-date
          done-ratio site project-id).each do |k|
         src = <<-SRC

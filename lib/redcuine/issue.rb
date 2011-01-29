@@ -26,7 +26,7 @@ module Redcuine
     end
 
     def post
-      keys = [:project_id, :subject, :describe, :tracker_id, :status_id,
+      keys = [:project_id, :subject, :description, :tracker_id, :status_id,
               :category_id, :assigned_to, :priority, :fixed_version,
               :start_date, :due_date, :estimate_date, :done_ratio]
       opts = rest_options(keys, @default_param)
@@ -42,7 +42,7 @@ module Redcuine
     end
 
     def put
-      keys = [:subject, :describe, :tracker_id, :status_id,
+      keys = [:subject, :description, :tracker_id, :status_id,
               :category_id, :assigned_to, :priority, :fixed_version,
               :start_date, :due_date, :estimate_date, :done_ratio]
       opts = rest_options(keys, @default_param)
@@ -82,7 +82,7 @@ module Redcuine
         puts "Please input --id."
         return false
       end
-      if CONFIG['rest_type'] == :post && CONFIG['project_id']
+      if CONFIG['rest_type'] == :post && CONFIG['project_id'].blank?
         puts "Please input --project-id."
         return false
       end
