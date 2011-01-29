@@ -18,6 +18,11 @@ module Redcuine
 
     def get
       CONFIG["id"] ? show(CONFIG["id"]) : index
+    rescue
+      puts $!.to_s
+      puts $!.backtrace if CONFIG["debug"]
+      puts "Fail to get issue."
+      return false
     end
 
     def post
@@ -27,8 +32,13 @@ module Redcuine
       opts = rest_options(keys, @default_param)
       issue = Resource::Issue.new(opts)
       res = issue.save
-      puts res ? "Issue created!" : "Issue fail to create."
+      puts res ? "Created issue!" : "Fail to create issue."
       return res
+    rescue
+      puts $!.to_s
+      puts $!.backtrace if CONFIG["debug"]
+      puts "Fail to create issue."
+      return false
     end
 
     def put
@@ -39,15 +49,25 @@ module Redcuine
       issue = Resource::Issue.find(CONFIG["id"])
       issue.load(opts)
       res = issue.save
-      puts res ? "Issue updated!" : "Issue fail to update."
+      puts res ? "Updated issue!" : "Fail to update issue."
       return res
+    rescue
+      puts $!.to_s
+      puts $!.backtrace if CONFIG["debug"]
+      puts "Fail to update issue."
+      return false
     end
 
     def delete
       issue = Resource::Issue.find(CONFIG["id"])
       res = issue.destroy
-      puts res ? "Issue destroyed!" : "Issue fail to destroy."
+      puts res ? "Destroyed issue!" : "Fail to destroy issue."
       return res
+    rescue
+      puts $!.to_s
+      puts $!.backtrace if CONFIG["debug"]
+      puts "Fail to destroy issue."
+      return false
     end
 
     private

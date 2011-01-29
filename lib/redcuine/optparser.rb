@@ -21,6 +21,10 @@ module Redcuine
       opt.on('-d', '--delete', 'DELETE by REST API') do |val|
         CONFIG["rest_type"] = :delete
       end
+
+      opt.on('--debug', 'for debug') do |val|
+        CONFIG["debug"] = true
+      end
     end
 
     @issue_optionparser = OptionParser.new do |opt|
