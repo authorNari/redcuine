@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{redcuine}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Narihiro Nakmaura"]
@@ -24,6 +24,8 @@ Gem::Specification.new do |s|
     "VERSION",
     "bin/redissue",
     "lib/redcuine.rb",
+    "lib/redcuine/active_resource_ext.rb",
+    "lib/redcuine/active_resource_ext/print_rest.rb",
     "lib/redcuine/base.rb",
     "lib/redcuine/config_setup.rb",
     "lib/redcuine/config_template.erb",
