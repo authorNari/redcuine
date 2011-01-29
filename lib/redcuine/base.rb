@@ -14,7 +14,7 @@ module Redcuine
     end
 
     private
-    def rest_options(keys, default={})
+    def self.rest_options(keys, default={})
       params = {}
       keys.each do |k|
         params[k] = CONFIG[k.to_s]

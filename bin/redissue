@@ -11,5 +11,6 @@ self_file =
 $:.unshift(File.dirname(self_file) + "/../lib")
 
 require 'redcuine'
+Redcuine.load_config!
 Redcuine::OptParser.issue_parse!(ARGV)
 Redcuine::Issue.run

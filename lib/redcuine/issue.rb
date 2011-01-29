@@ -1,22 +1,19 @@
 module Redcuine
   class Issue < Base
+    @@default_param = {}
+    @@issue_attribute_keys = [:subject, :description, :tracker_id, :status_id,
+                              :category_id, :assigned_to, :priority, :fixed_version,
+                              :start_date, :due_date, :estimate_date, :done_ratio]
+
     def self.run
       if super
-        issue = self.new
-        return issue.send(CONFIG['rest_type'])
+        @@default_param = {:key => CONFIG["api_key"]} if CONFIG["enable_api_key"]
+        return self.send(CONFIG['rest_type'])
       end
       return false
     end
 
-    def initialize
-      if CONFIG["enable_api_key"]
-        @default_param = {:key => CONFIG["api_key"]}
-      else
-        @default_param = {}
-      end
-    end
-
-    def get
+    def self.get
       CONFIG["id"] ? show(CONFIG["id"]) : index
     rescue
       puts $!.to_s
@@ -25,11 +22,9 @@ module Redcuine
       return false
     end
 
-    def post
-      keys = [:project_id, :subject, :description, :tracker_id, :status_id,
-              :category_id, :assigned_to, :priority, :fixed_version,
-              :start_date, :due_date, :estimate_date, :done_ratio]
-      opts = rest_options(keys, @default_param)
+    def self.post
+      keys = [:project_id] + @@issue_attribute_keys
+      opts = rest_options(keys, @@default_param)
       issue = Resource::Issue.new(opts)
       res = issue.save
       puts res ? "Created issue!" : "Fail to create issue."
@@ -41,11 +36,9 @@ module Redcuine
       return false
     end
 
-    def put
-      keys = [:subject, :description, :tracker_id, :status_id,
-              :category_id, :assigned_to, :priority, :fixed_version,
-              :start_date, :due_date, :estimate_date, :done_ratio]
-      opts = rest_options(keys, @default_param)
+    def self.put
+      keys = @@issue_attribute_keys
+      opts = rest_options(keys, @@default_param)
       issue = Resource::Issue.find(CONFIG["id"])
       issue.load(opts)
       res = issue.save
@@ -58,7 +51,7 @@ module Redcuine
       return false
     end
 
-    def delete
+    def self.delete
       issue = Resource::Issue.find(CONFIG["id"])
       res = issue.destroy
       puts res ? "Destroyed issue!" : "Fail to destroy issue."
@@ -89,19 +82,21 @@ module Redcuine
       return true
     end
 
-    def show(id)
-      issue = Resource::Issue.find(CONFIG["id"], :params => @default_param)
+    def self.show(id)
+      issue = Resource::Issue.find(CONFIG["id"], :params => @@default_param)
       print_get_format(issue)
+      return true
     end
 
-    def index
+    def self.index
       opts = rest_options([:project_id, :tracker_id, :assigned_to, :status_id],
-                          @default_param)
+                          @@default_param)
       res = Resource::Issue.find(:all, :params => opts)
-      res.each {|issue| print_get_format(issue)}
+      res.each {|issue| print_get_format(issue)} if res
+      return true
     end
 
-    def print_get_format(issue)
+    def self.print_get_format(issue)
       puts "- id: #{issue.id}"
       %w(project status priority author assigned_to fixed_version).each do |k|
         if issue.respond_to?(k)

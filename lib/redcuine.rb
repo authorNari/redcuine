@@ -25,5 +25,4 @@ module Redcuine
     ConfigSetup.run
     CONFIG.replace(YAML.load(IO.read(CONF_FILE)))
   end
-  load_config!
 end
