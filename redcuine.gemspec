@@ -29,7 +29,8 @@ Gem::Specification.new do |s|
      "lib/redcuine/config_setup.rb",
      "lib/redcuine/config_template.erb",
      "lib/redcuine/issue.rb",
-     "lib/redcuine/optparser.rb"
+     "lib/redcuine/optparser.rb",
+     "redcuine.gemspec"
   ]
   s.homepage = %q{https://github.com/authorNari/redcuine}
   s.rdoc_options = ["--charset=UTF-8"]
