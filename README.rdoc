@@ -20,6 +20,10 @@ Use redissue.
 
 TODO:
 
+== Testing
+
+* Redmine 1.1 - OK
+
 == Author
 
 Copyright (c) 2011 {Narihiro Nakamura}[http://www.narihir.info],
