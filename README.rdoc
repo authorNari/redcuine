@@ -24,6 +24,8 @@ TODO:
 
 * Redmine 1.1 - OK
 
+* ruby1.9.2, 1.8.7
+
 == Author
 
 Copyright (c) 2011 {Narihiro Nakamura}[http://www.narihir.info],
