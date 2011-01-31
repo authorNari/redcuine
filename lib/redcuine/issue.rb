@@ -2,7 +2,7 @@ module Redcuine
   class Issue < Base
     @@default_param = {}
     @@issue_attribute_keys = [:subject, :description, :tracker_id, :status_id,
-                              :category_id, :assigned_to, :priority, :fixed_version,
+                              :category_id, :assigned_to_id, :priority, :fixed_version,
                               :start_date, :due_date, :estimate_date, :done_ratio]
 
     def self.run
@@ -89,7 +89,7 @@ module Redcuine
     end
 
     def self.index
-      opts = rest_options([:project_id, :tracker_id, :assigned_to, :status_id],
+      opts = rest_options([:project_id, :tracker_id, :assigned_to_id, :status_id],
                           @@default_param)
       res = Resource::Issue.find(:all, :params => opts)
       res.each {|issue| print_get_format(issue)} if res
@@ -98,7 +98,7 @@ module Redcuine
 
     def self.print_get_format(issue)
       puts "- id: #{issue.id}"
-      %w(project status priority author assigned_to fixed_version).each do |k|
+      %w(project tracker status priority author assigned_to fixed_version).each do |k|
         if issue.respond_to?(k)
           puts "  #{k}: #{issue.send(k).name}, id:#{issue.send(k).id}"
         end

@@ -26,7 +26,7 @@ class OptParserTest < Test::Unit::TestCase
 
   def test_issue_parse
     opts = %w(id subject description tracker-id status-id
-       category-id assigned-to priority fixed-version
+       category-id assigned-to-id priority fixed-version
        start-date due-date estimate-date done-ratio site project-id)
     args = opts.map{|k| ["--#{k}", k]}.flatten
     Redcuine::OptParser.issue_parse!(args)

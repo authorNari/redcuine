@@ -31,13 +31,13 @@ class IssueTest < Test::Unit::TestCase
     Redcuine::CONFIG["rest_type"] = :get
     Redcuine::CONFIG["project_id"] = "1"
     Redcuine::CONFIG["tracker_id"] = "2"
-    Redcuine::CONFIG["assigned_to"] = "3"
+    Redcuine::CONFIG["assigned_to_id"] = "3"
     Redcuine::CONFIG["status_id"] = "4"
     assert_equal true, Redcuine::Issue.run
     assert_equal({:params => {:project_id => "1",
                    :tracker_id => "2",
-                   :assigned_to => "3",
-                     :status_id => "4"}},
+                   :assigned_to_id => "3",
+                   :status_id => "4"}},
                  @opts)
   end
 
@@ -64,7 +64,7 @@ class IssueTest < Test::Unit::TestCase
     Redcuine::CONFIG["rest_type"] = :post
     Redcuine::CONFIG["project_id"] = "1"
     keys = [:subject, :description, :tracker_id, :status_id,
-            :category_id, :assigned_to, :priority, :fixed_version,
+            :category_id, :assigned_to_id, :priority, :fixed_version,
             :start_date, :due_date, :estimate_date, :done_ratio]
     keys.each do |k|
       Redcuine::CONFIG[k.to_s] = true
@@ -89,7 +89,7 @@ class IssueTest < Test::Unit::TestCase
     Redcuine::CONFIG["rest_type"] = :put
     Redcuine::CONFIG["id"] = "1"
     keys = [:subject, :description, :tracker_id, :status_id,
-            :category_id, :assigned_to, :priority, :fixed_version,
+            :category_id, :assigned_to_id, :priority, :fixed_version,
             :start_date, :due_date, :estimate_date, :done_ratio]
     keys.each do |k|
       Redcuine::CONFIG[k.to_s] = true
