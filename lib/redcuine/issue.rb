@@ -26,9 +26,11 @@ module Redcuine
       keys = [:project_id] + @@issue_attribute_keys
       opts = rest_options(keys, @@default_param)
       issue = Resource::Issue.new(opts)
-      res = issue.save
-      puts res ? "Created issue!" : "Fail to create issue."
-      return res
+      issue.save!
+      puts "Created issue!"
+      CONFIG["id"] = issue.id
+      get
+      return true
     rescue
       puts $!.to_s
       puts $!.backtrace if CONFIG["debug"]
@@ -41,9 +43,11 @@ module Redcuine
       opts = rest_options(keys, @@default_param)
       issue = Resource::Issue.find(CONFIG["id"])
       issue.load(opts)
-      res = issue.save
-      puts res ? "Updated issue!" : "Fail to update issue."
-      return res
+      issue.save!
+      puts "Updated issue!"
+      CONFIG["id"] = issue.id
+      get
+      return true
     rescue
       puts $!.to_s
       puts $!.backtrace if CONFIG["debug"]
@@ -113,6 +117,7 @@ module Redcuine
           puts "   - #{cf.name}, id:#{cf.id}, value:#{cf.value}"
         end
       end
+      puts ""
     end
   end
 end

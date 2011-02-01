@@ -12,6 +12,7 @@ class Test::Unit::TestCase
   def setup
     super
     setup_with_clear_config
+    Redcuine::CONFIG["debug"] = true
   end
 
   def teardown
@@ -23,5 +24,5 @@ class Test::Unit::TestCase
     Redcuine::CONFIG.clear
   end
 
-  include RR::Adapters::RRMethods
+  include RR::Adapters::TestUnit
 end

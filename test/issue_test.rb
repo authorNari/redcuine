@@ -58,9 +58,11 @@ class IssueTest < Test::Unit::TestCase
     stub(Redcuine::Resource::Issue).new do |opt|
       @opt = opt
       o = Object.new
-      o.instance_eval("def save; true; end")
+      stub(o).save!{ true }
+      stub(o).id{ "1" }
       o
     end
+    mock(Redcuine::Issue).get.once
     Redcuine::CONFIG["rest_type"] = :post
     Redcuine::CONFIG["project_id"] = "1"
     keys = [:subject, :description, :tracker_id, :status_id,
@@ -71,6 +73,7 @@ class IssueTest < Test::Unit::TestCase
     end
     assert_equal true, Redcuine::Issue.run
     assert_equal([], keys - @opt.keys)
+    assert_equal "1", Redcuine::CONFIG["id"]
   end
 
   def test_post_fail
@@ -81,11 +84,13 @@ class IssueTest < Test::Unit::TestCase
   def test_put
     stub(Redcuine::Resource::Issue).find do |id|
       @id = id
-      @obj = Object.new
-      @obj.instance_eval("def save; true; end")
-      @obj.instance_eval("def load(args); @opt = args; end")
-      @obj
+      o = Object.new
+      stub(o).save!{ true }
+      stub(o).load{|args| @opt = args }
+      stub(o).id{|args| @id }
+      o
     end
+    mock(Redcuine::Issue).get.once
     Redcuine::CONFIG["rest_type"] = :put
     Redcuine::CONFIG["id"] = "1"
     keys = [:subject, :description, :tracker_id, :status_id,
@@ -96,7 +101,8 @@ class IssueTest < Test::Unit::TestCase
     end
     assert_equal true, Redcuine::Issue.run
     assert_equal("1", @id)
-    assert_equal([], keys - @obj.instance_variable_get("@opt").keys)
+    assert_equal([], keys - @opt.keys)
+    assert_equal "1", Redcuine::CONFIG["id"]
   end
 
   def test_put_fail
