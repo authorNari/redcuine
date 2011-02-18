@@ -22,6 +22,14 @@ module Redcuine
         CONFIG["rest_type"] = :delete
       end
 
+      opt.on('-s val', '--subject val', 'Set subject') do |val|
+        CONFIG["subject"] = val
+      end
+
+      opt.on('-m val', '--description val', 'Set description') do |val|
+        CONFIG["description"] = val
+      end
+
       opt.on('--debug', 'for debug') do |val|
         CONFIG["debug"] = true
       end
@@ -31,7 +39,7 @@ module Redcuine
       opt.program_name = 'redissue'
 
       default_opts(opt)
-      %w(id subject description tracker-id status-id category-id assigned-to-id
+      %w(id tracker-id status-id category-id assigned-to-id
          priority-id fixed-version start-date due-date estimate-date
          done-ratio site project-id).each do |k|
         src = <<-SRC

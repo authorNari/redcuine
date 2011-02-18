@@ -22,6 +22,12 @@ class OptParserTest < Test::Unit::TestCase
 
     Redcuine::OptParser.issue_parse!(%w(--debug))
     assert_equal true, Redcuine::CONFIG["debug"]
+
+    Redcuine::OptParser.issue_parse!(%w(-s subject))
+    assert_equal "subject", Redcuine::CONFIG["subject"]
+
+    Redcuine::OptParser.issue_parse!(%w(-m description))
+    assert_equal "description", Redcuine::CONFIG["description"]
   end
 
   def test_issue_parse
