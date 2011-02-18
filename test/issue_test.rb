@@ -66,7 +66,7 @@ class IssueTest < Test::Unit::TestCase
     Redcuine::CONFIG["rest_type"] = :post
     Redcuine::CONFIG["project_id"] = "1"
     keys = [:subject, :description, :tracker_id, :status_id,
-            :category_id, :assigned_to_id, :priority, :fixed_version,
+            :category_id, :assigned_to_id, :priority_id, :fixed_version,
             :start_date, :due_date, :estimate_date, :done_ratio]
     keys.each do |k|
       Redcuine::CONFIG[k.to_s] = true
@@ -94,7 +94,7 @@ class IssueTest < Test::Unit::TestCase
     Redcuine::CONFIG["rest_type"] = :put
     Redcuine::CONFIG["id"] = "1"
     keys = [:subject, :description, :tracker_id, :status_id,
-            :category_id, :assigned_to_id, :priority, :fixed_version,
+            :category_id, :assigned_to_id, :priority_id, :fixed_version,
             :start_date, :due_date, :estimate_date, :done_ratio]
     keys.each do |k|
       Redcuine::CONFIG[k.to_s] = true

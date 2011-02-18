@@ -32,7 +32,7 @@ module Redcuine
 
       default_opts(opt)
       %w(id subject description tracker-id status-id category-id assigned-to-id
-         priority fixed-version start-date due-date estimate-date
+         priority-id fixed-version start-date due-date estimate-date
          done-ratio site project-id).each do |k|
         src = <<-SRC
         opt.on('--#{k} val', 'Set #{k.gsub("-", " ")}') do |val|
