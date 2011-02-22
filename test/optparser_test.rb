@@ -28,6 +28,9 @@ class OptParserTest < Test::Unit::TestCase
 
     Redcuine::OptParser.issue_parse!(%w(-m description))
     assert_equal "description", Redcuine::CONFIG["description"]
+
+    Redcuine::OptParser.issue_parse!(%w(-e emacs))
+    assert_equal "emacs", Redcuine::CONFIG["editor"]
   end
 
   def test_issue_parse

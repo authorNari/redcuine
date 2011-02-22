@@ -30,6 +30,14 @@ module Redcuine
         CONFIG["description"] = val
       end
 
+      opt.on('-e [editor]', 'Edit description by editor (default $EDITOR || vi)') do |val|
+        if val
+          CONFIG["editor"] = val
+        else
+          CONFIG["editor"] = ENV['EDITOR'] || "vi"
+        end
+      end
+
       opt.on('--debug', 'for debug') do |val|
         CONFIG["debug"] = true
       end

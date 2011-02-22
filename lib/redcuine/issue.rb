@@ -1,3 +1,5 @@
+require "tempfile"
+
 module Redcuine
   class Issue < Base
     @@default_param = {}
@@ -25,6 +27,7 @@ module Redcuine
     def self.post
       keys = [:project_id] + @@issue_attribute_keys
       opts = rest_options(keys, @@default_param)
+      opts[:description] = description_by_editor if CONFIG["editor"]
       issue = Resource::Issue.new(opts)
       issue.save!
       puts "Created issue!"
@@ -39,9 +42,11 @@ module Redcuine
     end
 
     def self.put
-      keys = @@issue_attribute_keys
-      opts = rest_options(keys, @@default_param)
+      opts = rest_options(@@issue_attribute_keys, @@default_param)
       issue = Resource::Issue.find(CONFIG["id"])
+      if CONFIG["editor"]
+        opts[:description] = description_by_editor(issue.description)
+      end
       issue.load(opts)
       issue.save!
       puts "Updated issue!"
@@ -118,6 +123,15 @@ module Redcuine
         end
       end
       puts ""
+    end
+
+    def self.description_by_editor(description="")
+      description = CONFIG['description'] if CONFIG['description']
+      t = Tempfile.new("redissue")
+      t << description
+      t.close
+      system(CONFIG['editor'], t.path)
+      return File.read(t.path)
     end
   end
 end
